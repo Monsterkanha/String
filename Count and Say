@@ -1,0 +1,17 @@
+string Solution::countAndSay(int A) {
+    string curr = "1";
+    for(int i = 2; i <= A; i++ ){
+        string temp = "";
+        int j = 0 , n = curr.size();
+        while(j < n){
+            char tmp = curr[j];
+            int t = j;
+            while(t < n && curr[t] == tmp) t++;
+            temp += to_string(t-j) + tmp;
+            j = t;
+        }
+        curr = temp;
+    }
+
+    return curr;
+}
