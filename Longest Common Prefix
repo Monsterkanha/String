@@ -1,0 +1,36 @@
+int lcp(string a, string b){
+    int i = 0 ;
+    while(i < min(a.size(),b.size())){
+        if(a[i] != b[i])    return i;
+        i++;
+    }
+    return i;
+}
+string Solution::longestCommonPrefix(vector<string> &A) {
+    int mini = INT_MAX;
+    string temp = A[0];
+    for(int i = 1 ; i < A.size(); i++){
+        mini = lcp(temp, A[i]);
+        if(mini == 0) return "";
+        temp = temp.substr(0,mini);
+    }
+    return temp;
+
+}
+
+But, Key point to note :- If we sort these two then one at last and first will be those which differs most. So calculate answer for those only.
+
+
+string Solution::longestCommonPrefix(vector<string> &A) {
+    sort(A.begin() , A.end());
+    int m = A.size()-1;
+    int n = min(A[0].size() , A[m].size());
+    int i = 0;
+    string ans = "";
+    while(i < n && A[0][i] == A[m][i]){
+        ans += A[0][i];
+        i++;
+    }
+    return ans;
+
+}
