@@ -1,0 +1,15 @@
+int Solution::solve(string A) {
+    int openbracket = 0, req = 0;
+    int ans = 0;
+    for(auto x: A){
+        if(x == '(')
+            openbracket++;
+        else{
+            if(openbracket == 0){
+                req++;
+            }
+            else    openbracket--;
+        }
+    }
+    return openbracket + req;
+}
