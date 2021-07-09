@@ -1,0 +1,17 @@
+string Solution::addBinary(string A, string B) {
+    int i = A.size() - 1, j = B.size()- 1 , carry = 0;
+    string ans = "";
+    while(i >= 0 || j >=0 || carry){
+        int curr = carry;
+        if(i >= 0){
+            curr += (A[i--] == '1')?1:0;
+        }
+        if(j >= 0){
+            curr += (B[j--] == '1')?1:0;
+        }
+        ans = (char)(curr%2 + '0') + ans;
+        carry = curr/2;
+        // i--, j--;
+    }
+    return ans;
+}
