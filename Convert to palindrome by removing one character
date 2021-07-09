@@ -1,0 +1,23 @@
+We will find first mismatch either include ith or jth and check if any of these can give us palindrome.
+
+
+bool check(string A, int i , int j){
+    while(i < j && A[i] == A[j]){
+        i++, j--;
+    }
+    if(i >= j){
+        return true;
+    }
+    return false;
+}
+
+int Solution::solve(string A) {
+    int i = 0 , j = A.size()-1;
+    while(i < j && A[i] == A[j]){
+        i++, j--;
+    }
+    if(i >= j){
+        return 1;
+    }
+    return check(A, i+1, j) || check(A,i, j-1);
+}
