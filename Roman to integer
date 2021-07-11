@@ -1,0 +1,20 @@
+int Solution::romanToInt(string A) {
+    unordered_map<char , int> T{ {'I',1},
+                                 {'V' ,5},
+                                 {'X' ,10},
+                                 {'L',50},
+                                 {'C' , 100},
+                                 {'D', 500},
+                                 {'M' , 1000}};
+    int ans = T[A.back()];
+    for(int i = A.size() - 2; i >= 0 ; i--){
+        if(T[A[i]] < T[A[i+1]]){
+            ans -= T[A[i]];
+        }
+        else{
+            ans += T[A[i]];
+        }
+    }
+    return ans;
+}
+
