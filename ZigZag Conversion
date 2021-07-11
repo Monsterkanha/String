@@ -1,0 +1,29 @@
+We use forward and backward. if we have reached till end then make it false. else make it true.
+
+
+p a   h
+a p l s
+y   i
+
+while moving forward j++ , and for backward j--;
+
+string Solution::convert(string s, int B) {
+    if(B == 1) return s;
+    vector<string> res(B);
+    int i = 0 , j = 0;
+    bool forward = true;
+    while(i < s.size()){
+        res[j] += s[i++];
+
+        if(forward) forward = !(j == B-1);
+        else forward = (j == 0);
+
+        if(forward) j++;
+        else j--;
+    }
+    string ans = "";
+    for(auto x: res){
+        ans += x;
+    }
+    return ans;
+}
