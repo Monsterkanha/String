@@ -1,0 +1,16 @@
+First add it to the list and front will always specify whether to take this or not, and map will tell us whehter this is right member or not.
+string Solution::solve(string A) {
+    unordered_map<char, int> M;
+    deque<char> dq;
+    string ans = "";
+    for(auto x: A){
+        M[x]++;
+        dq.push_back(x);
+        while(!dq.empty() && M[dq.front()] > 1){
+            dq.pop_front();
+        }
+        if(dq.empty())  ans.push_back('#');
+        else    ans.push_back(dq.front());
+    }
+    return ans;
+}
