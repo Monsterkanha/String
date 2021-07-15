@@ -1,0 +1,62 @@
+Use vector instead of stack since we have to push and pop to print. 
+and also push and append are more better than '+'.
+
+if(current string is ".." then we have to pop the top element)
+if(current is "." then do nothing or if current is empty then also continue);
+
+and now start from bottom that is from first and add to the answer.
+
+string Solution::simplifyPath(string A) {
+    int n = A.size();
+    vector<string> s;
+    for(int i = 0 ; i < n; i++){
+        string temp = "";
+        while(i < n && A[i] != '/'){
+            temp += A[i++];
+        }
+        if(temp == ".."){
+            if(!s.empty()){
+                s.pop_back();
+            }
+        }
+        else if(temp == "" || temp == ".");
+        else{
+            s.push_back(temp);
+        }
+    }
+    string ans = "";
+    for(auto x: s){
+        ans += "/" + x;
+    }
+    if(ans.size() == 0) return "/";
+
+    return ans;
+}
+
+
+2. Using string stream :- 
+
+string Solution::simplifyPath(string A) {
+    int n = A.size();
+    vector<string> s;
+    stringstream ss(A);
+    string token;
+    while(getline(ss, token , '/')){
+        if(token == ".."){
+            if(!s.empty()){
+                s.pop_back();
+            }
+        }
+        else if(token == "" || token == ".");
+        else{
+            s.push_back(token);
+        }
+    }
+    string ans = "";
+    for(auto x: s){
+        ans += "/" + x;
+    }
+    if(ans.size() == 0) return "/";
+
+    return ans;
+}
