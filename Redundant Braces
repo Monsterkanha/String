@@ -1,0 +1,26 @@
+If we are having nothing while popping means this is redundant.
+
+
+int Solution::braces(string A) {
+    stack<char> st;
+    for(auto x: A){
+        if(x == ')'){
+            char top = st.top();
+            st.pop();
+
+            bool flag = true;
+            while(!st.empty() && top != '('){
+                if(top == '+' || top == '-' || top == '*' || top == '/' ){
+                    flag = false;
+                }
+                top = st.top();
+                st.pop();
+            }
+            if(flag){
+                return 1;
+            }
+        }
+        else st.push(x);
+    }
+    return 0;
+}
