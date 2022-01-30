@@ -1,0 +1,50 @@
+Modular inverse is applicable only for prime number the number should be invertible.
+
+For calculating suffix, first store suffix array. 
+
+We can now calculate hashes like that: h[i] = h[i + 1] * p + s[i]
+
+So, we want to find h[l..r]. Let len = r - l + 1
+
+Let's write h[l] and h[r + 1]:
+
+h[l] = s[l] * p^0 + s[l + 1] * p^1 + s[l + 2] * p^2 + ... + s[r] * p^(len - 1) + s[r + 1] * p^len + ...
+h[r + 1] = s[r + 1] * p^0 + s[r + 2] * p^1 + ...
+h[r + 1] * p^len = s[r + l] * p^len + s[r + 2] * p^(len+1) + ...
+h[l] - h[r + 1] * p^len = s[l] * p^0 + s[l + 1] * p^1 + s[l + 2] * p^2 + ... + s[r] * p^(len - 1)
+
+
+
+
+#include<bits/stdc++.h>
+class Solution {
+public:
+        
+    
+    string subStrHash(string s, int power, int m, int k, int hashValue) {
+        int n = s.size();
+        vector<long long> p_pow(n+1); 
+        p_pow[0] = 1; 
+        for (int i = 1; i < (int)p_pow.size(); i++) 
+            p_pow[i] = (p_pow[i-1] * 1LL*power) % m;
+        
+
+        vector<long long> h(n + 1, 0); 
+        for (int i = n-1; i >= 0; i--)
+            h[i] = (h[i+1]*power + (s[i] - 'a' + 1) ) % m; 
+        
+        for (int i = 0; i + k - 1 < n; i++) { 
+        
+            long long cur_h = (h[i] - h[i+k]*p_pow[k]) % m; 
+            int temp = (cur_h + m)%m;
+            if(temp == hashValue){
+                return s.substr(i, k);
+            }
+                
+        }
+        return "";
+
+
+    }
+};
+
