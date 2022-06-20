@@ -1,23 +1,37 @@
-int prefix_function(string s) {
-    int n = s.size();
-    vector<int> pi(n,0);
-    for(int i = 1 ; i < n ; i++){
-        int j = pi[i-1];
-        while(j > 0 && s[i] != s[j])    
-            j = pi[j-1];
-        if(s[i] == s[j])
-            j++;
-        pi[i] = j;
-    }
-    return pi[n-1];
-}
-
-
 int Solution::solve(string A) {
-    string temp = A + '#';
-    reverse(A.begin() , A.end());
-    temp += A;
-    return A.size() - prefix_function(temp);
+    string temp = A;
+    reverse(temp.begin(),temp.end());
+    string curr = temp + "#" + A;
+    int n = curr.size();
+    vector<int> lps(n, 0);
     
+    int mx = 0;
+    for(int i= 1; i < n; i++){
+        int j = lps[i-1];
+        while(j > 0 && curr[j] != curr[i]){
+            j = lps[j-1];
+        }
+        if(curr[j] == curr[i])    j++;
+        lps[i] = j;
+    }
+    
+    return (int)A.size() - lps[n-1];
 }
-we calculate what is the longest length of prefix match from end, and subtract from answer.
+
+
+
+Minimum character required at end. 
+It means firsts are not paired up.
+:::::________ we need to find longest palindrome in (___);
+Since KMP works for prefix.  so we need __ to be our prefix.
+
+so reverse(A) + '#' + A;
+_______:::::#:::::_______   <-  answer is stored here at the end. 
+min. char == A.size() - lps[n-1];
+
+
+
+Minimum character required at front.
+It means lasts are not paired up.
+_______:::: so directly add its reverse. 
+A + '#" + reverse(A);
